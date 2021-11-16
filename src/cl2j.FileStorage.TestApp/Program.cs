@@ -1,6 +1,4 @@
-﻿using cl2j.FileStorage.Core;
-using cl2j.FileStorage.Extensions;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
@@ -14,20 +12,8 @@ namespace cl2j.FileStorage.TestApp
         {
             ServiceProvider serviceProvider = ConfigureServices();
 
-            //Retreive the
-            var fileStorageProvider = serviceProvider.GetRequiredService<IFileStorageProviderFactory>().Get("Data");
-
-            //Create a file
-            await fileStorageProvider.WriteTextAsync("file1.txt", "First part of the text");
-
-            //Read the file content
-            var text = await fileStorageProvider.ReadTextAsync("file1.txt");
-
-            //Append text to the existing file
-            await fileStorageProvider.AppendTextAsync("file1.txt", "Second part of the text");
-
-            //Delete the file
-            await fileStorageProvider.DeleteAsync("file1.txt");
+            var executor = serviceProvider.GetRequiredService<FileOperationSample>();
+            await executor.ExecuteAsync();
         }
 
         private static ServiceProvider ConfigureServices()
@@ -44,6 +30,8 @@ namespace cl2j.FileStorage.TestApp
 
             //Configure the FileStorage DI
             services.AddFileStorage();
+
+            services.AddSingleton<FileOperationSample>();
 
             var serviceProvider = services.BuildServiceProvider();
 
