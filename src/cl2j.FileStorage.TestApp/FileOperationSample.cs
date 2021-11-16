@@ -8,7 +8,7 @@ namespace cl2j.FileStorage.TestApp
     {
         private IFileStorageProvider fileStorageProvider;
 
-        public FileOperationSample(IFileStorageProviderFactory fileStorageFactory)
+        public FileOperationSample(IFileStorageFactory fileStorageFactory)
         {
             fileStorageProvider = fileStorageFactory.Get("Data");
         }

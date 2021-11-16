@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace cl2j.FileStorage.Core
 {
-    internal class FileStorageProviderFactory : IFileStorageProviderFactory
+    internal class FileStorageFactory : IFileStorageFactory
     {
         private static readonly object Lock = new();
         private readonly IConfigurationRoot configuration;
-        private readonly ILogger<FileStorageProviderFactory> logger;
+        private readonly ILogger<FileStorageFactory> logger;
         private static Dictionary<string, IFileStorageProvider> storageProviderInstances = new Dictionary<string, IFileStorageProvider>();
 
-        public FileStorageProviderFactory(IConfigurationRoot configuration, ILogger<FileStorageProviderFactory> logger)
+        public FileStorageFactory(IConfigurationRoot configuration, ILogger<FileStorageFactory> logger)
         {
             this.configuration = configuration;
             this.logger = logger;

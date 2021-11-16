@@ -1,6 +1,6 @@
 ﻿namespace cl2j.FileStorage.Core
 {
-    public interface IFileStorageProviderFactory
+    public interface IFileStorageFactory
     {
         void Register<T>(string type) where T : IFileStorageProvider, new();
 

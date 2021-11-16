@@ -24,7 +24,7 @@ namespace cl2j.FileStorage.Tests
         public Task InitializeAsync()
         {
             var serviceProvider = ConfigurationHelpers.Configure(ConfigurationHelpers.ConfigureServices());
-            fileStorageProvider = serviceProvider.GetRequiredService<IFileStorageProviderFactory>().Get("Data");
+            fileStorageProvider = serviceProvider.GetRequiredService<IFileStorageFactory>().Get("Data");
 
             return fileStorageProvider.ClearDirectoryAsync("");
         }

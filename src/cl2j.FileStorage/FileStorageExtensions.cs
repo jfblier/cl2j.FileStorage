@@ -10,12 +10,12 @@ namespace cl2j.FileStorage
     {
         public static void AddFileStorage(this IServiceCollection services)
         {
-            services.TryAddSingleton<IFileStorageProviderFactory, FileStorageProviderFactory>();
+            services.TryAddSingleton<IFileStorageFactory, FileStorageFactory>();
         }
 
         public static void UseFileStorageDisk(this IServiceProvider serviceProvider)
         {
-            var fileStorageProviderFactory = serviceProvider.GetRequiredService<IFileStorageProviderFactory>();
+            var fileStorageProviderFactory = serviceProvider.GetRequiredService<IFileStorageFactory>();
             fileStorageProviderFactory.Register<FileStorageProviderDisk>("Disk");
         }
     }

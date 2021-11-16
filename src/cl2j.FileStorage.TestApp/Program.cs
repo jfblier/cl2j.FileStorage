@@ -11,9 +11,7 @@ namespace cl2j.FileStorage.TestApp
         private static async Task Main()
         {
             ServiceProvider serviceProvider = ConfigureServices();
-
-            var executor = serviceProvider.GetRequiredService<FileOperationSample>();
-            await executor.ExecuteAsync();
+            await serviceProvider.GetRequiredService<FileOperationSample>().ExecuteAsync();
         }
 
         private static ServiceProvider ConfigureServices()
