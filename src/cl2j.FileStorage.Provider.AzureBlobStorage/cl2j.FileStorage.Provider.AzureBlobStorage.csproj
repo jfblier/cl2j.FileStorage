@@ -13,6 +13,7 @@ Azure Blob Storage implementation</Description>
     <PackageProjectUrl>https://github.com/jfblier/cl2j.FileStorage</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jfblier/cl2j.FileStorage</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +22,7 @@ Azure Blob Storage implementation</Description>
 
   <ItemGroup>
     <ProjectReference Include="..\cl2j.FileStorage\cl2j.FileStorage.csproj" />
-  </ItemGroup>
 
+    <None Include="..\..\readme.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>
