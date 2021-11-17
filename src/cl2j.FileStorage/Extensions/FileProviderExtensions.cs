@@ -8,10 +8,17 @@ namespace cl2j.FileStorage.Extensions
     {
         public static async Task<int> ClearDirectoryAsync(this IFileStorageProvider fileStorageProvider, string path)
         {
-            var files = await fileStorageProvider.ListAsync(path);
-            foreach (var file in files)
-                await fileStorageProvider.DeleteAsync(file);
-            return files.Count();
+            try
+            {
+                var files = await fileStorageProvider.ListAsync(path);
+                foreach (var file in files)
+                    await fileStorageProvider.DeleteAsync(file);
+                return files.Count();
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }

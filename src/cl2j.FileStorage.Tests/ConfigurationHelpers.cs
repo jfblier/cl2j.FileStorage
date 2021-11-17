@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using cl2j.FileStorage.Provider.AzureBlobStorage;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -27,7 +28,12 @@ namespace cl2j.FileStorage.Tests
 
         public static IServiceProvider Configure(IServiceProvider serviceProvider)
         {
+            //Add the Local provider
             serviceProvider.UseFileStorageDisk();
+
+            //Add the Azure provider
+            serviceProvider.UseFileStorageAzureBlobStorage();
+
             return serviceProvider;
         }
     }

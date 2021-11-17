@@ -5,7 +5,7 @@ using Xunit;
 
 namespace cl2j.FileStorage.Tests
 {
-    public class FileStorageProviderDiskTests : IAsyncLifetime
+    public class FileStorageProviderAzureBlobStorage : IAsyncLifetime
     {
         private FileStorageTests fileStorageTests;
 
@@ -14,7 +14,8 @@ namespace cl2j.FileStorage.Tests
         public Task InitializeAsync()
         {
             var serviceProvider = ConfigurationHelpers.Configure(ConfigurationHelpers.ConfigureServices());
-            fileStorageTests = new FileStorageTests("Disk", serviceProvider.GetRequiredService<IFileStorageFactory>().Get("Disk"));
+            fileStorageTests = new FileStorageTests("Azure", serviceProvider.GetRequiredService<IFileStorageFactory>().Get("Azure"));
+
             return Task.CompletedTask;
         }
 

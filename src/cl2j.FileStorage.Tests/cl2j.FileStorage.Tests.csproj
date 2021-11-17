@@ -26,12 +26,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\cl2j.FileStorage.Provider.AzureBlobStorage\cl2j.FileStorage.Provider.AzureBlobStorage.csproj" />
     <ProjectReference Include="..\cl2j.FileStorage\cl2j.FileStorage.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
