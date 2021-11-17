@@ -8,6 +8,11 @@ Providers supported:
 
 The setup is simple.
 
+Add the nuget package to your project:
+```powershell
+Install-Package cl2j.FileStorage
+```
+
 1. Add the following lines in the appsettings.json:
 ```json
 "cl2j": {
