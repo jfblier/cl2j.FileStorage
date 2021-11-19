@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Company>cl2j</Company>
     <Product>cl2j.FileStorage</Product>
     <Description>cl2j.FileStorage is a multi-providers library that abstract file operations like read, write, delete and more. It's an open and extensible framework based on interfaces and Dependency Injection.
@@ -23,6 +23,6 @@ Azure Blob Storage implementation</Description>
   <ItemGroup>
     <ProjectReference Include="..\cl2j.FileStorage\cl2j.FileStorage.csproj" />
 
-    <None Include="..\..\readme.md" Pack="true" PackagePath="\" />
+    <None Include="..\readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
