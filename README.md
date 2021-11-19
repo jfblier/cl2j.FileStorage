@@ -2,8 +2,8 @@
 
 Providers supported:
 
-- `Local file system` - FileStorageProviderDisk
-- `Azure Blob Storage` - FileStorageProviderAzureBlobStorage
+- `FileStorageProviderDisk` provider for Local file system
+- `FileStorageProviderAzureBlobStorage` provider for Azure Blob Storage
 
 # Getting started
 
