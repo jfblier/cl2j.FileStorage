@@ -1,8 +1,8 @@
 ﻿using cl2j.FileStorage.Core;
 using cl2j.FileStorage.Provider.Disk;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
 
 namespace cl2j.FileStorage
 {
@@ -10,13 +10,15 @@ namespace cl2j.FileStorage
     {
         public static void AddFileStorage(this IServiceCollection services)
         {
-            services.TryAddSingleton<IFileStorageFactory, FileStorageFactory>();
-        }
+            services.TryAddSingleton<IFileStorageFactory>(x =>
+            {
+                var configuration = x.GetRequiredService<IConfigurationRoot>();
+                var fileStorageFactory = new FileStorageFactory(configuration);
 
-        public static void UseFileStorageDisk(this IServiceProvider serviceProvider)
-        {
-            var fileStorageProviderFactory = serviceProvider.GetRequiredService<IFileStorageFactory>();
-            fileStorageProviderFactory.Register<FileStorageProviderDisk>("Disk");
+                fileStorageFactory.Register<FileStorageProviderDisk>("Disk");
+
+                return fileStorageFactory;
+            });
         }
     }
 }

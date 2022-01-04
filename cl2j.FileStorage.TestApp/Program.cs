@@ -33,9 +33,6 @@ namespace cl2j.FileStorage.TestApp
 
             var serviceProvider = services.BuildServiceProvider();
 
-            //Add the FileStorgae Disk provider
-            serviceProvider.UseFileStorageDisk();
-
             return serviceProvider;
         }
     }

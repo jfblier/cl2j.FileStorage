@@ -1,7 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace cl2j.FileStorage.Core
 {
@@ -35,7 +32,7 @@ namespace cl2j.FileStorage.Core
         /// </summary>
         /// <param name="name">Name of the file to return the information</param>
         /// <returns>The file information of the name. null if the name doesn't exists</returns>
-        Task<FileStoreFileInfo> GetInfoAsync(string name);
+        Task<FileStoreFileInfo?> GetInfoAsync(string name);
 
         /// <summary>
         /// Return the list of all files and directory contained in the path

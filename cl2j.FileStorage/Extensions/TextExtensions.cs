@@ -1,15 +1,13 @@
 ﻿using cl2j.FileStorage.Core;
-using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace cl2j.FileStorage.Extensions
 {
     public static class TextExtensions
     {
-        private static Encoding DefaultEncoding = Encoding.UTF8;
+        private static readonly Encoding DefaultEncoding = Encoding.UTF8;
 
-        public static async Task<string> ReadTextAsync(this IFileStorageProvider fileStorageProvider, string fileName, Encoding encoding = null)
+        public static async Task<string> ReadTextAsync(this IFileStorageProvider fileStorageProvider, string fileName, Encoding? encoding = null)
         {
             using var stream = new MemoryStream();
             if (!await fileStorageProvider.ReadAsync(fileName, stream))
@@ -17,13 +15,13 @@ namespace cl2j.FileStorage.Extensions
             return stream.ToText(encoding ?? DefaultEncoding);
         }
 
-        public static async Task WriteTextAsync(this IFileStorageProvider fileStorageProvider, string fileName, string text, Encoding encoding = null)
+        public static async Task WriteTextAsync(this IFileStorageProvider fileStorageProvider, string fileName, string text, Encoding? encoding = null)
         {
             using var stream = text.ToStream(encoding ?? DefaultEncoding);
             await fileStorageProvider.WriteAsync(fileName, stream);
         }
 
-        public static async Task AppendTextAsync(this IFileStorageProvider fileStorageProvider, string fileName, string text, Encoding encoding = null)
+        public static async Task AppendTextAsync(this IFileStorageProvider fileStorageProvider, string fileName, string text, Encoding? encoding = null)
         {
             using var stream = text.ToStream(encoding ?? DefaultEncoding);
             await fileStorageProvider.AppendAsync(fileName, stream);
@@ -34,7 +32,7 @@ namespace cl2j.FileStorage.Extensions
         private static Stream ToStream(this string text, Encoding encoding)
         {
             if (text == null)
-                return null;
+                return new MemoryStream();
 
             var ms = new MemoryStream(encoding.GetBytes(text));
             ms.Seek(0, SeekOrigin.Begin);

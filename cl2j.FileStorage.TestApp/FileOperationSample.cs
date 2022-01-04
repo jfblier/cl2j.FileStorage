@@ -6,11 +6,11 @@ namespace cl2j.FileStorage.TestApp
 {
     internal class FileOperationSample
     {
-        private IFileStorageProvider fileStorageProvider;
+        private readonly IFileStorageProvider fileStorageProvider;
 
         public FileOperationSample(IFileStorageFactory fileStorageFactory)
         {
-            fileStorageProvider = fileStorageFactory.Get("Data");
+            fileStorageProvider = fileStorageFactory.Get("Disk");
         }
 
         public async Task ExecuteAsync()
@@ -19,7 +19,7 @@ namespace cl2j.FileStorage.TestApp
             await fileStorageProvider.WriteTextAsync("file1.txt", "First part of the text");
 
             //Read the file content
-            var text = await fileStorageProvider.ReadTextAsync("file1.txt");
+            _ = await fileStorageProvider.ReadTextAsync("file1.txt");
 
             //Append text to the existing file
             await fileStorageProvider.AppendTextAsync("file1.txt", "Second part of the text");

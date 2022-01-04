@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
 using System.IO;
 
 namespace cl2j.FileStorage.TestApp
@@ -23,12 +22,6 @@ namespace cl2j.FileStorage.TestApp
             services.AddFileStorage();
 
             return services.BuildServiceProvider();
-        }
-
-        public static IServiceProvider Configure(IServiceProvider serviceProvider)
-        {
-            serviceProvider.UseFileStorageDisk();
-            return serviceProvider;
         }
     }
 }

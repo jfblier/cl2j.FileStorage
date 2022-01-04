@@ -6,7 +6,7 @@ namespace cl2j.FileStorage.Tests
 {
     internal static class DataGenerator
     {
-        private static Random random = new Random();
+        private static readonly Random random = new();
 
         public static string GenerateFileName(string type, string container)
         {

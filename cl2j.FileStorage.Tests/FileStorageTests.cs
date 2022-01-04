@@ -9,7 +9,7 @@ namespace cl2j.FileStorage.Tests
 {
     internal class FileStorageTests
     {
-        private string name;
+        private readonly string name;
 
         public FileStorageTests(string name, IFileStorageProvider fileStorageProvider)
         {

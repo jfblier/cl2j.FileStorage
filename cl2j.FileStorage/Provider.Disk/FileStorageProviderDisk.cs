@@ -1,15 +1,11 @@
 ﻿using cl2j.FileStorage.Core;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace cl2j.FileStorage.Provider.Disk
 {
     public class FileStorageProviderDisk : IFileStorageProvider
     {
-        private DirectoryInfo directory;
+        private DirectoryInfo directory = null!;
         private const int BufferSize = 4096;
 
         public void Initialize(string name, IConfigurationSection configuration)
@@ -28,7 +24,7 @@ namespace cl2j.FileStorage.Provider.Disk
                 directory = Directory.CreateDirectory(settings.Path);
         }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         public async Task<bool> ExistsAsync(string name)
         {
@@ -37,7 +33,7 @@ namespace cl2j.FileStorage.Provider.Disk
             return exists;
         }
 
-        public async Task<FileStoreFileInfo> GetInfoAsync(string name)
+        public async Task<FileStoreFileInfo?> GetInfoAsync(string name)
         {
             try
             {
@@ -86,13 +82,11 @@ namespace cl2j.FileStorage.Provider.Disk
             var fileName = GetName(name);
             CreateDirectory(fileName);
 
-            using (var outputStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite, BufferSize, true))
-            {
-                var bytes = new byte[stream.Length];
-                stream.Seek(0, SeekOrigin.Begin);
-                var actualCount = await stream.ReadAsync(bytes, 0, bytes.Length);
-                await outputStream.WriteAsync(bytes.AsMemory(0, actualCount));
-            }
+            using var outputStream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite, BufferSize, true);
+            var bytes = new byte[stream.Length];
+            stream.Seek(0, SeekOrigin.Begin);
+            var actualCount = await stream.ReadAsync(bytes);
+            await outputStream.WriteAsync(bytes.AsMemory(0, actualCount));
         }
 
         public async Task AppendAsync(string name, Stream stream)
@@ -103,7 +97,7 @@ namespace cl2j.FileStorage.Provider.Disk
             using var outputStream = new FileStream(fileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite, BufferSize, true);
             var bytes = new byte[stream.Length];
             stream.Seek(0, SeekOrigin.Begin);
-            var actualCount = await stream.ReadAsync(bytes, 0, bytes.Length);
+            var actualCount = await stream.ReadAsync(bytes);
             await outputStream.WriteAsync(bytes.AsMemory(0, actualCount));
         }
 
@@ -118,7 +112,7 @@ namespace cl2j.FileStorage.Provider.Disk
         private static void CreateDirectory(string fileName)
         {
             var directory = Path.GetDirectoryName(fileName);
-            if (!Directory.Exists(directory))
+            if (directory != null && !Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
         }
 

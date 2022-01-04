@@ -28,9 +28,6 @@ namespace cl2j.FileStorage.Tests
 
         public static IServiceProvider Configure(IServiceProvider serviceProvider)
         {
-            //Add the Local provider
-            serviceProvider.UseFileStorageDisk();
-
             //Add the Azure provider
             serviceProvider.UseFileStorageAzureBlobStorage();
 
