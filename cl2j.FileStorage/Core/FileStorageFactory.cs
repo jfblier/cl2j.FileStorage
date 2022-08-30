@@ -40,7 +40,7 @@ namespace cl2j.FileStorage.Core
 
         public IList<string> Registrations => registrations;
 
-        public IFileStorageProvider? Get(string name)
+        public IFileStorageProvider Get(string name)
         {
             //First search into the cached fileSystems
             if (storageProviderInstances.TryGetValue(name, out var fileStorageInstance))
@@ -53,7 +53,7 @@ namespace cl2j.FileStorage.Core
                     return fileStorageInstance;
             }
 
-            return null;
+            throw new Exception("FileStorageProvider '{name}' not found");
         }
     }
 }
