@@ -1,11 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using cl2j.Tooling.Exceptions;
+using Microsoft.Extensions.Configuration;
 
 namespace cl2j.FileStorage.Core
 {
-    internal class FileStorageFactory : IFileStorageFactory
+    public class FileStorageFactory : IFileStorageFactory
     {
         private static readonly object Lock = new();
-        public List<string> registrations = new();
+        private List<string> registrations = new();
         private readonly IConfigurationRoot configuration;
         private static readonly Dictionary<string, IFileStorageProvider> storageProviderInstances = new();
 
@@ -40,7 +41,7 @@ namespace cl2j.FileStorage.Core
 
         public IList<string> Registrations => registrations;
 
-        public IFileStorageProvider Get(string name)
+        public IFileStorageProvider GetProvider(string name)
         {
             //First search into the cached fileSystems
             if (storageProviderInstances.TryGetValue(name, out var fileStorageInstance))
@@ -53,7 +54,7 @@ namespace cl2j.FileStorage.Core
                     return fileStorageInstance;
             }
 
-            throw new Exception("FileStorageProvider '{name}' not found");
+            throw new NotFoundException($"FileStorageProvider '{name}' not found");
         }
     }
 }

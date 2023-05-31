@@ -1,4 +1,5 @@
 ﻿using cl2j.FileStorage.Core;
+using cl2j.Tooling.Exceptions;
 using Microsoft.Extensions.Configuration;
 
 namespace cl2j.FileStorage.Provider.Disk
@@ -8,15 +9,15 @@ namespace cl2j.FileStorage.Provider.Disk
         private DirectoryInfo directory = null!;
         private const int BufferSize = 4096;
 
-        public void Initialize(string name, IConfigurationSection configuration)
+        public void Initialize(string providerName, IConfigurationSection configuration)
         {
-            Name = name;
+            Name = providerName;
 
             var settings = new FileStorageProviderDiskConfiguration();
             configuration.Bind(settings);
 
             if (string.IsNullOrEmpty(settings.Path))
-                throw new Exception("FileStorageProviderDisk: Path configuration not defined.");
+                throw new NotFoundException("FileStorageProviderDisk: Path configuration not defined.");
 
             if (Directory.Exists(settings.Path))
                 directory = new DirectoryInfo(settings.Path);
@@ -59,7 +60,12 @@ namespace cl2j.FileStorage.Provider.Disk
         public async Task<IEnumerable<string>> ListAsync(string path)
         {
             await Task.CompletedTask;
-            return Directory.GetFiles(GetName(path));
+
+            var fullName = GetName(path);
+            if (!Directory.Exists(fullName))
+                return new List<string>();
+
+            return Directory.GetFiles(fullName);
         }
 
         public async Task<bool> ReadAsync(string name, Stream stream)
@@ -77,7 +83,7 @@ namespace cl2j.FileStorage.Provider.Disk
             }
         }
 
-        public async Task WriteAsync(string name, Stream stream)
+        public async Task WriteAsync(string name, Stream stream, string? contentType)
         {
             var fileName = GetName(name);
             CreateDirectory(fileName);

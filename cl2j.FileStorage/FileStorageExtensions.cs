@@ -8,7 +8,7 @@ namespace cl2j.FileStorage
 {
     public static class FileStorageExtensions
     {
-        public static void AddFileStorage(this IServiceCollection services)
+        public static void AddFileStorage(this IServiceCollection services, Action<FileStorageFactory>? factoryCallback = null)
         {
             services.TryAddSingleton<IFileStorageFactory>(x =>
             {
@@ -16,6 +16,9 @@ namespace cl2j.FileStorage
                 var fileStorageFactory = new FileStorageFactory(configuration);
 
                 fileStorageFactory.Register<FileStorageProviderDisk>("Disk");
+
+                if (factoryCallback != null)
+                    factoryCallback(fileStorageFactory);
 
                 return fileStorageFactory;
             });

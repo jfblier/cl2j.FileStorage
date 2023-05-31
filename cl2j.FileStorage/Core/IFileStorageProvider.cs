@@ -55,7 +55,7 @@ namespace cl2j.FileStorage.Core
         /// </summary>
         /// <param name="name">The name of the file to write to</param>
         /// <param name="stream">The content of the file to be written</param>
-        Task WriteAsync(string name, Stream stream);
+        Task WriteAsync(string name, Stream stream, string? contentType = null);
 
         /// <summary>
         /// Append the stream to the existing file.

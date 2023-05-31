@@ -1,15 +1,12 @@
-﻿using cl2j.FileStorage.Core;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace cl2j.FileStorage.Provider.AzureBlobStorage
 {
     public static class FileStorageAzureExtensions
     {
-        public static void UseFileStorageAzureBlobStorage(this IServiceProvider serviceProvider)
+        public static void AddAzureBlobFileStorage(this IServiceCollection services)
         {
-            var fileStorageProviderFactory = serviceProvider.GetRequiredService<IFileStorageFactory>();
-            fileStorageProviderFactory.Register<FileStorageProviderAzureBlobStorage>("AzureBlobStorage");
+            services.AddFileStorage(factory => factory.Register<FileStorageProviderAzureBlobStorage>("AzureBlobStorage"));
         }
     }
 }

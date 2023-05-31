@@ -4,6 +4,6 @@
     {
         void Register<T>(string type) where T : IFileStorageProvider, new();
 
-        IFileStorageProvider Get(string name);
+        IFileStorageProvider GetProvider(string name);
     }
 }
