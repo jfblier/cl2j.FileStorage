@@ -62,20 +62,69 @@ namespace cl2j.FileStorage.Provider.AzureBlobStorage
             };
         }
 
-        public async Task<IEnumerable<string>> ListAsync(string path)
+        public async Task<IEnumerable<string>> ListFilesAsync(string path)
         {
             if (container == null)
                 throw new BadRequestException("Container not defined");
 
-            var blobs = container.GetBlobs();
-            var names = blobs.Select(b => b.Name);
+            var list = new List<string>();
 
-            if (!string.IsNullOrEmpty(path))
-                names = names.Where(n => n.StartsWith(path));
+            var blobs = container.GetBlobs();
+            if (path != null && path.Length > 0)
+            {
+                foreach (var blob in blobs)
+                {
+                    var name = blob.Name;
+                    if (name.StartsWith(path))
+                    {
+                        name = name.Substring(path.Length + 1);
+                        if (name.IndexOf("/") < 0)
+                            list.Add(name);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var blob in blobs)
+                {
+                    var name = blob.Name;
+                    if (name.IndexOf("/") < 0)
+                        list.Add(name);
+                }
+            }
 
             await Task.CompletedTask;
 
-            return names;
+            return list;
+        }
+
+        public async Task<IEnumerable<string>> ListFoldersAsync(string path)
+        {
+            if (container == null)
+                throw new BadRequestException("Container not defined");
+
+            var list = new HashSet<string>();
+
+            var blobs = container.GetBlobs();
+            foreach (var blob in blobs)
+            {
+                var name = blob.Name;
+                if (name.StartsWith(path))
+                {
+                    name = name.Substring(path.Length + 1);
+
+                    var n = name.IndexOf("/");
+                    if (n > 0)
+                    {
+                        name = name.Substring(0, n);
+                        list.Add(name);
+                    }
+                }
+            }
+
+            await Task.CompletedTask;
+
+            return list;
         }
 
         public async Task<bool> ReadAsync(string name, Stream stream)

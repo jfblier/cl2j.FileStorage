@@ -57,7 +57,7 @@ namespace cl2j.FileStorage.Provider.Disk
             }
         }
 
-        public async Task<IEnumerable<string>> ListAsync(string path)
+        public async Task<IEnumerable<string>> ListFilesAsync(string path)
         {
             await Task.CompletedTask;
 
@@ -65,7 +65,20 @@ namespace cl2j.FileStorage.Provider.Disk
             if (!Directory.Exists(fullName))
                 return new List<string>();
 
-            return Directory.GetFiles(fullName);
+            var list = Directory.GetFiles(fullName);
+            return list.Select(n => n.Substring(fullName.Length + 1));
+        }
+
+        public async Task<IEnumerable<string>> ListFoldersAsync(string path)
+        {
+            await Task.CompletedTask;
+
+            var fullName = GetName(path);
+            if (!Directory.Exists(fullName))
+                return new List<string>();
+
+            var list = Directory.GetDirectories(fullName);
+            return list.Select(n => n.Substring(fullName.Length + 1));
         }
 
         public async Task<bool> ReadAsync(string name, Stream stream)

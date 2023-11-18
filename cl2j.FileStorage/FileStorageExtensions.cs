@@ -17,8 +17,7 @@ namespace cl2j.FileStorage
 
                 fileStorageFactory.Register<FileStorageProviderDisk>("Disk");
 
-                if (factoryCallback != null)
-                    factoryCallback(fileStorageFactory);
+                factoryCallback?.Invoke(fileStorageFactory);
 
                 return fileStorageFactory;
             });

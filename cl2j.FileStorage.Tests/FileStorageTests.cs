@@ -1,8 +1,8 @@
-﻿using cl2j.FileStorage.Core;
-using cl2j.FileStorage.Extensions;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using cl2j.FileStorage.Core;
+using cl2j.FileStorage.Extensions;
 using Xunit;
 
 namespace cl2j.FileStorage.Tests
@@ -72,7 +72,7 @@ namespace cl2j.FileStorage.Tests
             await FileStorageProvider.WriteTextAsync(fileName2, text2);
 
             //Assert
-            var rootFiles = await FileStorageProvider.ListAsync(Path.GetDirectoryName(fileName1));
+            var rootFiles = await FileStorageProvider.ListFilesAsync(Path.GetDirectoryName(fileName1));
             Assert.Equal(2, rootFiles.Count());
         }
 

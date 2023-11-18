@@ -1,6 +1,4 @@
 ﻿using cl2j.FileStorage.Core;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace cl2j.FileStorage.Extensions
 {
@@ -10,7 +8,7 @@ namespace cl2j.FileStorage.Extensions
         {
             try
             {
-                var files = await fileStorageProvider.ListAsync(path);
+                var files = await fileStorageProvider.ListFilesAsync(path);
                 foreach (var file in files)
                     await fileStorageProvider.DeleteAsync(file);
                 return files.Count();

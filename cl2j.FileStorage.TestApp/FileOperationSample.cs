@@ -1,6 +1,6 @@
-﻿using cl2j.FileStorage.Core;
+﻿using System.Threading.Tasks;
+using cl2j.FileStorage.Core;
 using cl2j.FileStorage.Extensions;
-using System.Threading.Tasks;
 
 namespace cl2j.FileStorage.TestApp
 {
@@ -10,7 +10,7 @@ namespace cl2j.FileStorage.TestApp
 
         public FileOperationSample(IFileStorageFactory fileStorageFactory)
         {
-            fileStorageProvider = fileStorageFactory.Get("Disk");
+            fileStorageProvider = fileStorageFactory.GetProvider("Disk");
         }
 
         public async Task ExecuteAsync()

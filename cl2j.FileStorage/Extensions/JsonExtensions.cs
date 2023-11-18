@@ -32,9 +32,7 @@ namespace cl2j.FileStorage.Extensions
             var options = CreateSerializerOptions();
 
             var value = JsonConvert.DeserializeObject<T>(data, options);
-            if (value == null)
-                throw new JsonException($"Unable to deserialize {typeof(T).Name} from value '{data}'");
-            return value;
+            return value == null ? throw new JsonException($"Unable to deserialize {typeof(T).Name} from value '{data}'") : value;
         }
 
         public static async Task WriteJsonObjectAsync<T>(this IFileStorageProvider fileStorageProvider, string fileName, T obj, bool indented = false, Encoding? encoding = null)

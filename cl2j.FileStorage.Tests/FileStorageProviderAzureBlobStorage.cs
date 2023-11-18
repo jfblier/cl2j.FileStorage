@@ -1,6 +1,6 @@
+using System.Threading.Tasks;
 using cl2j.FileStorage.Core;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace cl2j.FileStorage.Tests
@@ -13,8 +13,9 @@ namespace cl2j.FileStorage.Tests
 
         public Task InitializeAsync()
         {
-            var serviceProvider = ConfigurationHelpers.Configure(ConfigurationHelpers.ConfigureServices());
-            fileStorageTests = new FileStorageTests("Azure", serviceProvider.GetRequiredService<IFileStorageFactory>().Get("Azure"));
+            var serviceCollection = ConfigurationHelpers.Configure(ConfigurationHelpers.ConfigureServices());
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            fileStorageTests = new FileStorageTests("Azure", serviceProvider.GetRequiredService<IFileStorageFactory>().GetProvider("Azure"));
 
             return Task.CompletedTask;
         }

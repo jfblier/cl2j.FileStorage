@@ -35,11 +35,18 @@ namespace cl2j.FileStorage.Core
         Task<FileStoreFileInfo?> GetInfoAsync(string name);
 
         /// <summary>
-        /// Return the list of all files and directory contained in the path
+        /// Return the list of all files contained in the path
         /// </summary>
         /// <param name="path">The path to list the objects</param>
         /// <returns>The list of names contained in the path</returns>
-        Task<IEnumerable<string>> ListAsync(string path);
+        Task<IEnumerable<string>> ListFilesAsync(string path);
+
+        /// <summary>
+        /// Return the list of all directory contained in the path
+        /// </summary>
+        /// <param name="path">The path to list the objects</param>
+        /// <returns>The list of names contained in the path</returns>
+        Task<IEnumerable<string>> ListFoldersAsync(string path);
 
         /// <summary>
         /// Get the specified file as a Stream. The caller is responsible to instance and dispose the stream.
