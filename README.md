@@ -1,5 +1,5 @@
 Deprecated - Replaced by https://github.com/CL2J-Technologies/dotnet-toolkit
-
+---
 
 `cl2j.FileStorage` is a multi-providers .NET library written in C# that abstract file operations like read, write, delete and more. It's an open and extensible framework based on interfaces and Dependency Injection.
 
